@@ -4,10 +4,12 @@ import { useActionState, useEffect } from "react";
 import { signUp } from "@/actions/signUp";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
+import { HoneypotInput } from "@/components/HonepotInput";
+import { ErrorMessage } from "@/components/ErrorMessage";
 import { simulateBotSubmission } from "@/lib/simulateBotSubmission";
 
 export default function SignUp() {
-  const [{ data }, handleSubmit, isLoading] = useActionState(signUp, {});
+  const [{ data, error }, handleSubmit, isLoading] = useActionState(signUp, {});
 
   useEffect(() => {
     if (!data) {
@@ -19,10 +21,12 @@ export default function SignUp() {
 
   return (
     <form action={handleSubmit} id={"sign-up-form"}>
+      <ErrorMessage>{error}</ErrorMessage>
       <Input name={"firstName"} label={"First name"} isRequired={true} />
       <Input name={"lastName"} label={"First name"} isRequired={true} />
       <Input name={"email"} label={"Email"} />
       <Input name={"phoneNumber"} type={"tel"} label={"Phone number"} />
+      <HoneypotInput name={"middleName"} />
       <Button type="submit" isLoading={isLoading}>
         Sign up
       </Button>

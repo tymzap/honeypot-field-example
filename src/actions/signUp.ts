@@ -6,6 +6,12 @@ export async function signUp(
   previousState: SignUpState,
   formData: FormData,
 ): Promise<SignUpState> {
+  const honeypotValue = formData.get("middleName");
+
+  if (honeypotValue) {
+    return { error: "Bot submission detected" };
+  }
+
   console.log("Signing up in progress...");
   await sleep(1000);
 
