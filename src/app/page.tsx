@@ -4,6 +4,7 @@ import { useActionState, useEffect } from "react";
 import { signUp } from "@/actions/signUp";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
+import { simulateBotSubmission } from "@/lib/simulateBotSubmission";
 
 export default function SignUp() {
   const [{ data }, handleSubmit, isLoading] = useActionState(signUp, {});
@@ -27,4 +28,8 @@ export default function SignUp() {
       </Button>
     </form>
   );
+}
+
+if (process.env.NODE_ENV === "development") {
+  Object.assign(window, { simulateBotSubmission });
 }
